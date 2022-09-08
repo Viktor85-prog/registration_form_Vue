@@ -72,3 +72,61 @@
     background: #FFFFFF;
 
 }
+
+
+.info {
+    box-shadow: 0px 8px 25px rgba(155, 99, 248, 0.15);
+    border-radius: 4px;
+}
+
+.info img {
+    margin: 20px;
+}
+
+.card_custom_big_img{
+    width: 630px;
+    height: 421px;
+    /* transform: matrix(-1, 0, 0, 1, 0, 0); */
+}
+
+.card-title{
+    font-style: normal;
+    font-weight: 800;
+    font-size: 32px;
+    line-height: 39px;
+
+    color: #351768;
+}
+
+.rectangle {
+    width: 43px;
+    height: 43px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 38px;
+    text-align: center;
+    background: #351767;
+    color: #FFFFFF;
+}
+
+
+.card_text_custom {
+    margin: 5px;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+
+    color: #211536;
+
+    opacity: 0.6;
+}
+
+.card_text_custom img {
+    margin: 5px;
+}
+
+.some_text {
+    font-weight: 400;
+    line-height: 24px;
+}
