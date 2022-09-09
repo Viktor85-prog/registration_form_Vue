@@ -52,6 +52,10 @@
     color: #FFFFFF;
 }
 
+.btn_custom:disabled {
+    background: #d29cda;
+    color: #FFFFFF;
+}
 
 .btn_custom__small {
     width: 182px;
