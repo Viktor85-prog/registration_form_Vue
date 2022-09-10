@@ -42,6 +42,13 @@
     color: #211536;
 }
 
+ul {
+    list-style: none;
+}
+
+.form-control:disabled  {
+    background-color: #fafafa;
+}
 .btn_custom:hover {
     background: #9B63F8;
     color: #FFFFFF;

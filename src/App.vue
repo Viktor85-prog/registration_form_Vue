@@ -118,61 +118,92 @@
           rows="3"  
           v-model="formReg.description"/>
         </div>
-        <div class="row g-4 mb-5 mt-2 meeting">
-          <div class="col-md">
-            <label for="start_date1" class="form-label">Дата начала</label>
-            <input type="date" class="form-control"  v-model="formReg.start_date1" id="start_date1" value="22.12.2019">
-          </div>
-          <div class="col-md">
-            <label for="start_time1" class="form-label">Время начала</label>
-            <input type="time" class="form-control" v-model="formReg.start_time1" id="start_time1" >
-          </div>
-          <div class="col-md">
-            <label for="end_date1" class="form-label">Дата окончания</label>
-            <input type="date" class="form-control" v-model="formReg.end_date1"  id="end_date1" >
-          </div>
-          <div class="col-md">
-            <label for="end_time1" class="form-label">Время окончания</label>
-            <input type="time" class="form-control"  v-model="formReg.end_time1" id="end_time1" >
-          </div>
-        </div>
-        <div class="row g-4 mb-5 mt-2 meeting">
-          <div class="col-md">
-            <label for="start_date2" class="form-label">Дата начала</label>
-            <input type="date" class="form-control" id="start_date2" value="22.12.2019">
-          </div>
-          <div class="col-md">
-            <label for="start_time2" class="form-label">Время начала</label>
-            <input type="time" class="form-control" id="start_time2" >
-          </div>
-          <div class="col-md">
-            <label for="end_date2" class="form-label">Дата окончания</label>
-            <input type="date" class="form-control" id="end_date2" >
-          </div>
-          <div class="col-md">
-            <label for="end_time2" class="form-label">Время окончания</label>
-            <input type="time" class="form-control" id="end_time2" >
-          </div>
-        </div>
+        <ul>
+          <li v-for="(date, index) in formReg.dates" :key="index">
+            <div class="row g-4 mb-5 mt-2 meeting">
+              <div class="col-md">
+                <label for="start_date1" class="form-label">Дата начала</label>
+                <input type="text" 
+                class="form-control"  
+                id="start_date1" 
+                disabled
+                :value="date.start_date">
+              </div>
+              <div class="col-md">
+                <label for="start_time1" class="form-label">Время начала</label>
+                <input type="text" 
+                id="start_time1" 
+                class="form-control" 
+                disabled
+                :value="date.start_time">
+              </div>
+              <div class="col-md">
+                <label for="end_date1" class="form-label">Дата окончания</label>
+                <input type="text" 
+                class="form-control" 
+                :value="date.end_date"
+                disabled
+                id="end_date1" >
+              </div>
+              <div class="col-md">
+                <label for="end_time1" class="form-label">Время окончания</label>
+                <input type="text" 
+                class="form-control"  
+                disabled
+                :value="date.end_time"
+                id="end_time1" >
+              </div>
+            </div>
+          </li>
+        </ul>
         <div class="row g-4 mb-4 meeting_new">
           <div class="col-md">
             <label for="start_date" class="form-label">Дата начала</label>
-            <input type="date" class="form-control" id="start_date" value="22.12.2019">
+            <input 
+            type="date" 
+            class="form-control" 
+            v-model="formReg.newDate.start_date"
+            :max="formReg.newDate.end_date"
+            id="start_date">
+            <!-- @blur="$v.formReg.start_date.$touch()" -->
+            <!-- :class="{'is-invalid':$v.formReg.start_date.$error}"  -->
+            <!-- <div v-if="!$v.formReg.start_date.required" class="invalid-feedback">
+                {{validationMessageRequired}}
+              </div> -->
           </div>
           <div class="col-md">
             <label for="start_time" class="form-label">Время начала</label>
-            <input type="time" class="form-control" id="start_time" >
+            <input 
+            type="time" 
+            class="form-control" 
+            v-model="formReg.newDate.start_time"
+            :max="formReg.newDate.end_time"
+            id="start_time" >
           </div>
           <div class="col-md">
             <label for="end_date" class="form-label">Дата окончания</label>
-            <input type="date" class="form-control" id="end_date" >
+            <input 
+            type="date" 
+            v-model="formReg.newDate.end_date"
+            class="form-control" 
+            :min="formReg.newDate.start_date"
+            id="end_date" >
           </div>
           <div class="col-md">
             <label for="end_time" class="form-label">Время окончания</label>
-            <input type="time" class="form-control" id="end_time" >
+            <input 
+            type="time" 
+            class="form-control" 
+            v-model="formReg.newDate.end_time"
+            :min="formReg.newDate.start_time"
+            id="end_time" >
           </div>
         </div>
-        <button type="button" class="btn_custom btn_custom__small ">+ Добавить дату</button>
+        <button 
+        type="button" 
+        class="btn_custom btn_custom__small "
+        @click="addDate">
+        + Добавить дату</button>
         <div class="row g-2 mb-4 mt-5">
           <div class="col-md mb-3">
             <label for="rating" class="form-label">Рейтинг мероприятия</label>
@@ -182,10 +213,12 @@
             @blur="$v.formReg.rating.$touch()" 
             :class="{'is-invalid':$v.formReg.rating.$error}" 
             v-model="formReg.rating">
-              <option value="18" selected>18+</option>
-              <option value="0">0+</option>
-              <option value="3">3+</option>
-              <option value="60">60+</option>
+              <option 
+                v-for="rating in formReg.ratings" 
+                :key="rating.id" 
+                :value="rating.title">
+                {{ rating.title }}
+              </option>
             </select>
             <div v-if="!$v.formReg.rating.required" class="invalid-feedback">
                 {{validationMessageRequired}}
@@ -278,16 +311,40 @@ export default {
         name:'',
         photo:'',
         description:'',
-        start_date1:'',
-        start_time1:'',
-        end_date1:'',
-        end_time1:'',
+        newDate:  { 
+            start_date:'',
+            start_time:'',
+            end_date:'',
+            end_time:''
+          },
         rating:'',
         address:'',
+        dates:[
+          { 
+            start_date:'22.12.2019',
+            start_time:'10:00',
+            end_date:'22.12.2019',
+            end_time:'12:00'
+          },
+          { 
+            start_date:'22.12.2019',
+            start_time:'10:00',
+            end_date:'22.12.2019',
+            end_time:'12:00'
+          }
+        ],
+        ratings:[
+          {"id":1,"title":"1+"},
+          {"id":2,"title":"6+"},
+          {"id":3,"title":"12+"},
+          {"id":4,"title":"16+"},
+          {"id":5,"title":"18+"},
+          {"id":6,"title":"21+"},
+          {"id":7,"title":"23+"}]
       }
     }
   },
-  computed: {
+  computed: {    
     formValidation() {
           return  this.$v.formReg.organization.$invalid ||
                   this.$v.formReg.phone.$invalid ||
@@ -299,6 +356,21 @@ export default {
     }
   },
   methods: {
+    addDate() {
+      let dateObj = { 
+            start_date:this.formReg.newDate.start_date,
+            start_time:this.formReg.newDate.start_time,
+            end_date:this.formReg.newDate.end_date,
+            end_time:this.formReg.newDate.end_time
+          }
+      this.formReg.dates.push(dateObj)
+      this.formReg.newDate =  { 
+            start_date:'',
+            start_time:'',
+            end_date:'',
+            end_time:''
+          }
+    },
     nextPage() {
       this.page++
     },
@@ -357,10 +429,18 @@ export default {
         },
         // photo:'',
         // description:'',
-        // start_date1:'',
-        // start_time1:'',
-        // end_date1:'',
-        // end_time1:'',
+        start_date:{
+          required
+        },
+        start_time:{
+          required
+        },
+        end_date:{
+          required
+        },
+        end_time:{
+          required
+        },
         rating:{
           required
         },
