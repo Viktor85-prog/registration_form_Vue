@@ -289,9 +289,9 @@
 
   </div>
 </template>
-
 <script>
 import { required, minLength, maxLength, between, email, numeric, alpha } from 'vuelidate/lib/validators'
+const axios = require('axios').default;
 
 export default {
   data() {
@@ -333,16 +333,14 @@ export default {
             end_time:'12:00'
           }
         ],
-        ratings:[
-          {"id":1,"title":"1+"},
-          {"id":2,"title":"6+"},
-          {"id":3,"title":"12+"},
-          {"id":4,"title":"16+"},
-          {"id":5,"title":"18+"},
-          {"id":6,"title":"21+"},
-          {"id":7,"title":"23+"}]
+        ratings:[]
       }
     }
+  },
+  mounted() {
+    axios
+    .get('http://testwork.rdbx24.ru/api')
+    .then(response => this.formReg.ratings = response.data.result)
   },
   computed: {    
     formValidation() {
