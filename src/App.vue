@@ -341,6 +341,9 @@ export default {
     axios
     .get('http://testwork.rdbx24.ru/api')
     .then(response => this.formReg.ratings = response.data.result)
+    .catch(error => {
+      console.log(error)
+    })
   },
   computed: {    
     formValidation() {
