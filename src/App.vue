@@ -207,8 +207,9 @@
         </div>
         <button @click="cancel" type="button" class="btn_custom">Отменить</button>
         <!-- :disabled="disabledNextBitton"  -->
+        <!-- @click="formValidationTouch" -->
         <button 
-        @click="formValidationTouch"
+        @click="nextPage"
         type="button" 
         class="btn_custom">Далее</button>
       </form>
@@ -223,17 +224,17 @@
       <div class=" mb-3" style="max-width: 600px;">
         <div class="row g-0 d-flex justify-content-around">
           <div class="col-md-1 mt-2 rectangle">
-            16+
+            {{formReg.rating}}
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h3 class="card-title mb-4">Чайный заголовок — писать не длиннее трёх строк</h3>
-              <p class="card_text_custom"> <img src="../src/assets/place_img.jpg" alt=""> г. Казань, ул. Волкова, д. 7/29</p>
-              <p class="card_text_custom"><img src="../src/assets/date_img.jpg" alt="">21 окт. 2019 (пт), 21 окт. 2019 (пт)</p>
-              <p class="card_text_custom"><img src="../src/assets/time_img.jpg" alt="">17:30, 16:30</p>
+              <h3 class="card-title mb-4">{{formReg.name}}</h3>
+              <p class="card_text_custom"> <img src="../src/assets/place_img.jpg" alt="">{{formReg.address}}</p>
+              <p class="card_text_custom"><img src="../src/assets/date_img.jpg" alt="">{{formReg.start_date1}}-{{formReg.end_date1}}</p>
+              <p class="card_text_custom"><img src="../src/assets/time_img.jpg" alt="">{{formReg.start_time1}}-{{formReg.end_time1}}</p>
               <h6 class="mt-4 mb-2">Контакты</h6>
-              <p class="card_text_custom"> <img src="../src/assets/phone_img.jpg" alt="">+7 (999) 888-77-66</p>
-              <p class="card_text_custom"><img src="../src/assets/mail_img.jpg" alt="">example@mail.com</p>
+              <p class="card_text_custom"> <img src="../src/assets/phone_img.jpg" alt="">{{formReg.phone}}</p>
+              <p class="card_text_custom"><img src="../src/assets/mail_img.jpg" alt="">{{formReg.email}}</p>
             </div>
           </div>
           <div class="col-md-2">
@@ -242,6 +243,7 @@
         </div>
       </div>
     <div class="some_text mb-5">
+      {{formReg.description}}
       В лаборатории жгучих перцев соберём собственные аппараты для экстракции. Узнаем, чем на самом деле пахнет мята, почему красный перец такой жгучий и получим привычные 
       для кухни запахи лабораторным способом. В лаборатории вареных яиц c помощью физико-химических методов вычислим идеальное время для варки куриного яйца. Отделим желток 
       от белка, проведем качественное сравнение составов и узнаем все о стоимости выеденного яйца. В лаборатории консервированных ананасов познакомимся с тушенкой и разберемся 
