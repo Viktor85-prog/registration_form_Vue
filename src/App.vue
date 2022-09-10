@@ -208,7 +208,7 @@
         <button @click="cancel" type="button" class="btn_custom">Отменить</button>
         <!-- :disabled="disabledNextBitton"  -->
         <button 
-        @click="nextPage"
+        @click="formValidationTouch"
         type="button" 
         class="btn_custom">Далее</button>
       </form>
@@ -281,16 +281,19 @@ export default {
         end_date1:'',
         end_time1:'',
         rating:'',
-        address:''
+        address:'',
       }
     }
   },
   computed: {
-    disabledNextBitton() {
+    formValidation() {
           return  this.$v.formReg.organization.$invalid ||
                   this.$v.formReg.phone.$invalid ||
                   this.$v.formReg.email.$invalid ||
-                  this.$v.formReg.city.$invalid 
+                  this.$v.formReg.city.$invalid ||
+                  this.$v.formReg.name.$invalid  ||
+                  this.$v.formReg.rating.$invalid ||
+                  this.$v.formReg.address.$invalid
     }
   },
   methods: {
@@ -305,6 +308,25 @@ export default {
         this.formReg[input] = ''
       }
       this.$v.$reset()
+    },
+    formValidationTouch() {
+        if (this.$v.formReg.organization.$invalid ||
+              this.$v.formReg.phone.$invalid ||
+              this.$v.formReg.email.$invalid ||
+              this.$v.formReg.city.$invalid ||
+              this.$v.formReg.name.$invalid  ||
+              this.$v.formReg.rating.$invalid ||
+              this.$v.formReg.address.$invalid) {
+                this.$v.formReg.organization.$touch()
+                this.$v.formReg.phone.$touch()
+                this.$v.formReg.email.$touch()
+                this.$v.formReg.city.$touch()
+                this.$v.formReg.name.$touch()
+                this.$v.formReg.rating.$touch()
+                this.$v.formReg.address.$touch() 
+        } else {
+          this.nextPage()
+        }
     }
     
   },
