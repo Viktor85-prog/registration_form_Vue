@@ -241,9 +241,9 @@
         </div>
         <button @click="cancel" type="button" class="btn_custom">Отменить</button>
         <!-- :disabled="disabledNextBitton"  -->
-        <!-- @click="formValidationTouch" -->
+        <!-- @click="nextPage" -->
         <button 
-        @click="nextPage"
+        @click="formValidationTouch"
         type="button" 
         class="btn_custom">Далее</button>
       </form>
@@ -264,8 +264,8 @@
             <div class="card-body">
               <h3 class="card-title mb-4">{{formReg.name}}</h3>
               <p class="card_text_custom"> <img src="../src/assets/place_img.jpg" alt="">{{formReg.address}}</p>
-              <p class="card_text_custom"><img src="../src/assets/date_img.jpg" alt="">{{formReg.start_date1}}-{{formReg.end_date1}}</p>
-              <p class="card_text_custom"><img src="../src/assets/time_img.jpg" alt="">{{formReg.start_time1}}-{{formReg.end_time1}}</p>
+              <p class="card_text_custom"><img src="../src/assets/date_img.jpg" alt="">{{formReg.dates[2]?.start_date}}-{{formReg.dates[2]?.end_date}}</p>
+              <p class="card_text_custom"><img src="../src/assets/time_img.jpg" alt="">{{formReg.dates[2]?.start_time}}-{{formReg.dates[2]?.end_time}}</p>
               <h6 class="mt-4 mb-2">Контакты</h6>
               <p class="card_text_custom"> <img src="../src/assets/phone_img.jpg" alt="">{{formReg.phone}}</p>
               <p class="card_text_custom"><img src="../src/assets/mail_img.jpg" alt="">{{formReg.email}}</p>
@@ -304,8 +304,6 @@ export default {
       validationMessageLength60:"Длинна должна быть не более 60 символов",
       validationMessageAlpha: "Поле должно состоять только из букв",
       validationMessageEmail: "Не кореектный адрес электронной почты",
-      imgSrc: "/addPhoto.jpg",
-      img:null,
       previewImage: null,
       formReg: {
         organization:'',
@@ -376,25 +374,7 @@ export default {
           this.$emit('input', file[0])
         }
       },
-    browseImg() {
-      this.$refs.file.click()
-    },
-    changeImg(e) {
-      this.img = e.target.files[0]
-      this.$emit('input', this.img)
-
-      let reader = new FileReader()
-      reader.readAsDataURL(this.img)
-      reader.onload = (e) => {
-        this.imgSrc = e.target.result
-      }
-    },
-    //  onChange(e) {
-    //   const file = e.target.files[0]
-    //   this.image = file
-    //   this.img.imageUrl = URL.createObjectURL(file)
-    // },
-    addDate() {
+      addDate() {
       let dateObj = { 
             start_date:this.formReg.newDate.start_date,
             start_time:this.formReg.newDate.start_time,
