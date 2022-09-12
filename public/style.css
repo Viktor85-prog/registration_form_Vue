@@ -141,3 +141,43 @@ ul {
     font-weight: 400;
     line-height: 24px;
 }
+
+.card_input {
+    visibility: hidden; 
+    position: absolute;
+    top: 0;left: 0;
+}
+
+.relative {
+    position: relative;
+}
+
+.inline-block {
+    display: inline-block;
+}
+
+.card_button {
+    position: absolute;
+    top:0px;
+    left: 0px;
+    width: 126px;
+    height: 126px;
+    border: none;
+    opacity: 0;
+
+}
+
+.imagePreviewWrapper {
+    width: 126px;
+    height: 126px;
+    display: block;
+    cursor: pointer;
+    margin: 0 auto ;
+    background-size: cover;
+    background-position: center center;
+}
+
+
+.page2_image {
+    width: 800px;
+}

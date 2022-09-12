@@ -39,7 +39,7 @@
               <div v-if="!$v.formReg.phone.numeric" class="invalid-feedback">
                 {{validationMessageAlpha}}
               </div>
-               <div v-if="!$v.formReg.phone.minLength" class="invalid-feedback">
+              <div v-if="!$v.formReg.phone.minLength" class="invalid-feedback">
                 {{validationMessageLength11}}
               </div>
           </div>
@@ -95,21 +95,22 @@
                 {{validationMessageLength60}}
               </div>
         </div>
-        <h6 class="mb-4">Фотография</h6>
-        <div class="d-flex flex-row mb-3">
-          <div class="card_custom">
-            <img src="../src/assets/addPhoto.jpg" class="card-img-top card_img" alt="...">
-            <div class="card-body">
-              <p class="card-text">Главная фотография (обложка мероприятия)</p>
+        
+        <h6 class="">Фотография</h6>
+        <div class="d-flex flex-row mb-1">
+          <div  class="card_custom relative">
+            <div class="imagePreviewWrapper " 
+              :style="{ 'background-image': `url(${previewImage})` }" 
+              @click="selectImage"> 
+              <img v-if="!previewImage" src="../src/assets/addPhoto.jpg" class="card-img-top card_img" alt="...">
             </div>
-          </div>
-            <div class="card_custom">
-            <img src="../src/assets/tea.jpg" class="card-img-top card_img" alt="...">
+            <input ref="fileInput"  class="card_input" type="file" accept="image/*" @input="pickFile">
             <div class="card-body">
               <p class="card-text">Главная фотография (обложка мероприятия)</p>
             </div>
           </div>
         </div>
+
         <div class="mb-3">
           <label for="description" class="form-label">Подробное описание</label>
           <textarea 
@@ -271,16 +272,16 @@
             </div>
           </div>
           <div class="col-md-2">
-            <img src="../src/assets/tea_big.jpg" class=" rounded-end" alt="...">
+            <img :src="previewImage" class=" rounded-end page2_image" alt="...">
           </div>
         </div>
       </div>
     <div class="some_text mb-5">
       {{formReg.description}}
-      В лаборатории жгучих перцев соберём собственные аппараты для экстракции. Узнаем, чем на самом деле пахнет мята, почему красный перец такой жгучий и получим привычные 
+      <!-- В лаборатории жгучих перцев соберём собственные аппараты для экстракции. Узнаем, чем на самом деле пахнет мята, почему красный перец такой жгучий и получим привычные 
       для кухни запахи лабораторным способом. В лаборатории вареных яиц c помощью физико-химических методов вычислим идеальное время для варки куриного яйца. Отделим желток 
       от белка, проведем качественное сравнение составов и узнаем все о стоимости выеденного яйца. В лаборатории консервированных ананасов познакомимся с тушенкой и разберемся 
-      в методах сохранения продуктов. Законсервируем парочку ананасов четырьмя разными способами и заберем все это домой, чтобы выяснить, какой метод консервации лучше.
+      в методах сохранения продуктов. Законсервируем парочку ананасов четырьмя разными способами и заберем все это домой, чтобы выяснить, какой метод консервации лучше. -->
     </div>
 
       <button @click="prewPage" type="button" class="btn_custom">Назад</button>
@@ -303,6 +304,9 @@ export default {
       validationMessageLength60:"Длинна должна быть не более 60 символов",
       validationMessageAlpha: "Поле должно состоять только из букв",
       validationMessageEmail: "Не кореектный адрес электронной почты",
+      imgSrc: "/addPhoto.jpg",
+      img:null,
+      previewImage: null,
       formReg: {
         organization:'',
         phone:'',
@@ -357,6 +361,39 @@ export default {
     }
   },
   methods: {
+    selectImage () {
+          this.$refs.fileInput.click()
+      },
+      pickFile () {
+        let input = this.$refs.fileInput
+        let file = input.files
+        if (file && file[0]) {
+          let reader = new FileReader
+          reader.onload = e => {
+            this.previewImage = e.target.result
+          }
+          reader.readAsDataURL(file[0])
+          this.$emit('input', file[0])
+        }
+      },
+    browseImg() {
+      this.$refs.file.click()
+    },
+    changeImg(e) {
+      this.img = e.target.files[0]
+      this.$emit('input', this.img)
+
+      let reader = new FileReader()
+      reader.readAsDataURL(this.img)
+      reader.onload = (e) => {
+        this.imgSrc = e.target.result
+      }
+    },
+    //  onChange(e) {
+    //   const file = e.target.files[0]
+    //   this.image = file
+    //   this.img.imageUrl = URL.createObjectURL(file)
+    // },
     addDate() {
       let dateObj = { 
             start_date:this.formReg.newDate.start_date,
