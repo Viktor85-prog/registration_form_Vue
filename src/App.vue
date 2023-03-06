@@ -27,6 +27,8 @@
             <label for="phone" class="form-label">Телефон</label>
             <input 
                 type="phone"
+				ref="phone" 
+				v-imask="maskPhone"
                 v-model="formReg.phone" 
                 class="form-control"
                 id="phone" 
@@ -36,9 +38,9 @@
               <div v-if="!$v.formReg.phone.required" class="invalid-feedback">
                 {{validationMessageRequired}}
               </div>
-              <div v-if="!$v.formReg.phone.numeric" class="invalid-feedback">
+              <!-- <div v-if="!$v.formReg.phone.numeric" class="invalid-feedback">
                 {{validationMessageAlpha}}
-              </div>
+              </div> -->
               <div v-if="!$v.formReg.phone.minLength" class="invalid-feedback">
                 {{validationMessageLength11}}
               </div>
@@ -297,7 +299,9 @@
   </div>
 </template>
 <script>
-import { required, minLength, maxLength, between, email, numeric, alpha } from 'vuelidate/lib/validators'
+import { required, minLength, maxLength, between, email, alpha } from 'vuelidate/lib/validators'
+import { IMaskDirective } from 'vue-imask'
+
 const axios = require('axios').default;
 
 export default {
@@ -308,8 +312,12 @@ export default {
       validationMessageLength4:"Длинна должна быть не менее 4х символов",
       validationMessageLength11:"Длинна должна быть не менее 11 символов",
       validationMessageLength60:"Длинна должна быть не более 60 символов",
-      validationMessageAlpha: "Поле должно состоять только из букв",
+      validationMessageAlpha: "Поле должно состоять только из цифр",
       validationMessageEmail: "Не кореектный адрес электронной почты",
+      maskPhone: {
+        mask: '+{7}(000)000-00-00',
+        lazy: true,  // make placeholder always visible
+      },
       previewImage: null,
       formReg: {
         organization:'',
@@ -439,6 +447,9 @@ export default {
     }
     
   },
+  directives: {
+      imask: IMaskDirective
+    },
   validations: {
       formReg:{
         organization: {
@@ -447,7 +458,7 @@ export default {
         },
         phone:{
           required,
-          numeric,
+        //   numeric,
           minLength: minLength(10)
         },
         email:{
