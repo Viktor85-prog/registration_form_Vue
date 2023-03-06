@@ -103,8 +103,11 @@
               :style="{ 'background-image': `url(${previewImage})` }" 
               @click="selectImage"> 
               <img v-if="!previewImage" src="../src/assets/addPhoto.jpg" class="card-img-top card_img" alt="...">
+				<button @click="resetImage" v-if="previewImage"  type="button" class="close" data-dismiss="alert" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+				</button>
+				<input ref="fileInput"  class="card_input" type="file" accept="image/*" @input="pickFile">
             </div>
-            <input ref="fileInput"  class="card_input" type="file" accept="image/*" @input="pickFile">
             <div class="card-body">
               <p class="card-text">Главная фотография (обложка мероприятия)</p>
             </div>
@@ -362,32 +365,36 @@ export default {
     selectImage () {
           this.$refs.fileInput.click()
       },
-      pickFile () {
-        let input = this.$refs.fileInput
-        let file = input.files
-        if (file && file[0]) {
-          let reader = new FileReader
-          reader.onload = e => {
-            this.previewImage = e.target.result
-          }
-          reader.readAsDataURL(file[0])
-          this.$emit('input', file[0])
-        }
-      },
-      addDate() {
-      let dateObj = { 
-            start_date:this.formReg.newDate.start_date,
-            start_time:this.formReg.newDate.start_time,
-            end_date:this.formReg.newDate.end_date,
-            end_time:this.formReg.newDate.end_time
-          }
-      this.formReg.dates.push(dateObj)
-      this.formReg.newDate =  { 
-            start_date:'',
-            start_time:'',
-            end_date:'',
-            end_time:''
-          }
+	resetImage (e) {
+		e.stopPropagation()
+		this.previewImage = null
+	},
+	pickFile () {
+	let input = this.$refs.fileInput
+	let file = input.files
+	if (file && file[0]) {
+		let reader = new FileReader
+		reader.onload = e => {
+		this.previewImage = e.target.result
+		}
+		reader.readAsDataURL(file[0])
+		this.$emit('input', file[0])
+	}
+	},
+	addDate() {
+	let dateObj = { 
+		start_date:this.formReg.newDate.start_date,
+		start_time:this.formReg.newDate.start_time,
+		end_date:this.formReg.newDate.end_date,
+		end_time:this.formReg.newDate.end_time
+		}
+	this.formReg.dates.push(dateObj)
+	this.formReg.newDate =  { 
+		start_date:'',
+		start_time:'',
+		end_date:'',
+		end_time:''
+		}
     },
     nextPage() {
       this.page++
@@ -400,6 +407,7 @@ export default {
         this.formReg[input] = ''
       }
       this.$v.$reset()
+      this.previewImage = null
     },
     formValidationTouch() {
         if (this.$v.formReg.organization.$invalid ||
@@ -474,7 +482,5 @@ export default {
 </script>
 
 <style>
-.card_custom .imagePreviewWrapper {
- background-position: 0 0;
-}
+
 </style>

@@ -174,9 +174,27 @@ ul {
     cursor: pointer;
     margin: 0 auto ;
     background-size: cover;
-    background-position: center center;
+    background-position: 0 0;
+	position:relative;
 }
 
+.close {
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	border-radius: 50%;
+	right: -10px;
+	top: -10px;
+	background: #351767;
+	color: #FFFFFF;
+}
+
+.close span {
+	position: absolute;
+	font-size: 24px;
+	top: -2px;
+	left: 5px;
+}
 
 .page2_image {
     width: 800px;
