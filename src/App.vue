@@ -328,12 +328,12 @@ export default {
             end_date:'22.12.2019',
             end_time:'12:00'
           },
-          { 
-            start_date:'22.12.2019',
-            start_time:'10:00',
-            end_date:'22.12.2019',
-            end_time:'12:00'
-          }
+        //   { 
+        //     start_date:'22.12.2019',
+        //     start_time:'10:00',
+        //     end_date:'22.12.2019',
+        //     end_time:'12:00'
+        //   }
         ],
         ratings:[]
       }
@@ -354,7 +354,7 @@ export default {
                   this.$v.formReg.email.$invalid ||
                   this.$v.formReg.city.$invalid ||
                   this.$v.formReg.name.$invalid  ||
-                  this.$v.formReg.rating.$invalid ||
+                //   this.$v.formReg.rating.$invalid ||
                   this.$v.formReg.address.$invalid
     }
   },
@@ -474,5 +474,7 @@ export default {
 </script>
 
 <style>
-
+.card_custom .imagePreviewWrapper {
+ background-position: 0 0;
+}
 </style>
