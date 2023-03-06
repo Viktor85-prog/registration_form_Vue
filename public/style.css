@@ -6,6 +6,11 @@
     line-height: 22px;
 }
 
+ol, ul {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
 .card_custom{
     width: 126px;
     margin: 3px;
@@ -198,4 +203,8 @@ ul {
 
 .page2_image {
     width: 800px;
+}
+
+.form-date {
+	position: relative;
 }

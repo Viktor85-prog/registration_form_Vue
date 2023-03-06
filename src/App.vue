@@ -124,7 +124,10 @@
         </div>
         <ul>
           <li v-for="(date, index) in formReg.dates" :key="index">
-            <div class="row g-4 mb-5 mt-2 meeting">
+            <div class="row mb-5 mt-4 pt-3 meeting form-date">
+				<button @click="delDate(date)" type="button" class="close" data-dismiss="alert" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+				</button>
               <div class="col-md">
                 <label for="start_date1" class="form-label">Дата начала</label>
                 <input type="text" 
@@ -160,7 +163,7 @@
             </div>
           </li>
         </ul>
-        <div class="row g-4 mb-4 meeting_new">
+        <div class="row mb-4 meeting_new">
           <div class="col-md">
             <label for="start_date" class="form-label">Дата начала</label>
             <input 
@@ -396,6 +399,9 @@ export default {
 		end_time:''
 		}
     },
+	delDate(date) {
+		this.formReg.dates = this.formReg.dates.filter(t => t !== date)
+	},
     nextPage() {
       this.page++
     },
