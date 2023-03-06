@@ -328,12 +328,12 @@ export default {
         rating:'',
         address:'',
         dates:[
-          { 
-            start_date:'22.12.2019',
-            start_time:'10:00',
-            end_date:'22.12.2019',
-            end_time:'12:00'
-          },
+        //   { 
+        //     start_date:'22.12.2019',
+        //     start_time:'10:00',
+        //     end_date:'22.12.2019',
+        //     end_time:'12:00'
+        //   },
         //   { 
         //     start_date:'22.12.2019',
         //     start_time:'10:00',
@@ -385,6 +385,9 @@ export default {
 	}
 	},
 	addDate() {
+		if (!(this.formReg.newDate.start_date&&this.formReg.newDate.start_time&&this.formReg.newDate.end_date&&this.formReg.newDate.end_time)) {
+			return
+		}
 	let dateObj = { 
 		start_date:this.formReg.newDate.start_date,
 		start_time:this.formReg.newDate.start_time,
