@@ -256,9 +256,9 @@
     </div>
 
     <div v-show="page === 2" class="page">
-      <div class="info mb-5">
+      <div class="info mb-5 d-flex">
         <img src="../src/assets/attention.jpg" alt="">
-        <span class="ml-4">Проверьте ваше мероприятие на наличие ошибок, если все в порядке - отправляйте на модерацию</span>
+        <span class="ml-4 mt-3">Проверьте ваше мероприятие на наличие ошибок, если все в порядке - отправляйте на модерацию</span>
       </div>
 
       <div class=" mb-3" style="max-width: 600px;">
@@ -424,14 +424,14 @@ export default {
               this.$v.formReg.email.$invalid ||
               this.$v.formReg.city.$invalid ||
               this.$v.formReg.name.$invalid  ||
-              this.$v.formReg.rating.$invalid ||
+            //   this.$v.formReg.rating.$invalid ||
               this.$v.formReg.address.$invalid) {
                 this.$v.formReg.organization.$touch()
                 this.$v.formReg.phone.$touch()
                 this.$v.formReg.email.$touch()
                 this.$v.formReg.city.$touch()
                 this.$v.formReg.name.$touch()
-                this.$v.formReg.rating.$touch()
+                // this.$v.formReg.rating.$touch()
                 this.$v.formReg.address.$touch() 
         } else {
           this.nextPage()

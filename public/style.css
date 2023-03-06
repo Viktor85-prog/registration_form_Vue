@@ -197,12 +197,13 @@ ul {
 .close span {
 	position: absolute;
 	font-size: 24px;
-	top: -2px;
+	top: 2px;
 	left: 5px;
 }
 
 .page2_image {
-    width: 800px;
+    max-width: 800px;
+	max-height: 300px;
 }
 
 .form-date {
