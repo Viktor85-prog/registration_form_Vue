@@ -208,11 +208,16 @@
             id="end_time" >
           </div>
         </div>
+		
         <button 
         type="button" 
         class="btn_custom btn_custom__small "
+		:class="{invalig_button: notDateRequired}"
         @click="addDate">
         + Добавить дату</button>
+		<div  v-show="notDateRequired" class="invalig_message">
+			{{this.validationDateRequired}}
+		</div>
         <div class="row g-2 mb-4 mt-5">
           <div class="col-md mb-3">
             <label for="rating" class="form-label">Рейтинг мероприятия</label>
@@ -231,7 +236,7 @@
             </select>
             <div v-if="!$v.formReg.rating.required" class="invalid-feedback">
                 {{validationMessageRequired}}
-              </div>
+            </div>
           </div>
           <div class="col-md">
             <label for="address" class="form-label">Адрес мероприятия</label>
@@ -272,8 +277,8 @@
             <div class="card-body">
               <h3 class="card-title mb-4">{{formReg.name}}</h3>
               <p class="card_text_custom"> <img src="../src/assets/place_img.jpg" alt="">{{formReg.address}}</p>
-              <p class="card_text_custom"><img src="../src/assets/date_img.jpg" alt="">{{formReg.dates[2]?.start_date}}-{{formReg.dates[2]?.end_date}}</p>
-              <p class="card_text_custom"><img src="../src/assets/time_img.jpg" alt="">{{formReg.dates[2]?.start_time}}-{{formReg.dates[2]?.end_time}}</p>
+              <p class="card_text_custom"><img src="../src/assets/date_img.jpg" alt="">{{formReg.dates[0]?.start_date}}-{{formReg.dates[0]?.end_date}}</p>
+              <p class="card_text_custom"><img src="../src/assets/time_img.jpg" alt="">{{formReg.dates[0]?.start_time}}-{{formReg.dates[0]?.end_time}}</p>
               <h6 class="mt-4 mb-2">Контакты</h6>
               <p class="card_text_custom"> <img src="../src/assets/phone_img.jpg" alt="">{{formReg.phone}}</p>
               <p class="card_text_custom"><img src="../src/assets/mail_img.jpg" alt="">{{formReg.email}}</p>
@@ -314,6 +319,8 @@ export default {
       validationMessageLength60:"Длинна должна быть не более 60 символов",
       validationMessageAlpha: "Поле должно состоять только из цифр",
       validationMessageEmail: "Не кореектный адрес электронной почты",
+      validationDateRequired: "Не добавлена дата мероприятия",
+      notDateRequired:false,
       maskPhone: {
         mask: '+{7}(000)000-00-00',
         lazy: true,  // make placeholder always visible
@@ -409,7 +416,15 @@ export default {
 		end_date:'',
 		end_time:''
 		}
+	this.notDateRequired = false
     },
+	checkDate () {
+		if(this.formReg.dates.length>0) {
+			this.notDateRequired = false
+		} else {
+			this.notDateRequired = true
+		}
+	},
 	delDate(date) {
 		this.formReg.dates = this.formReg.dates.filter(t => t !== date)
 	},
@@ -441,6 +456,7 @@ export default {
                 this.$v.formReg.name.$touch()
                 // this.$v.formReg.rating.$touch()
                 this.$v.formReg.address.$touch() 
+				this.checkDate ()
         } else {
           this.nextPage()
         }
